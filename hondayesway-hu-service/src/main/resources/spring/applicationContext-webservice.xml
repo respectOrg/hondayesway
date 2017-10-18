@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	
+	<!-- 短信发送接口 -->
+	<bean id="smsLocator" class="cn.yesway.common.soap.smsservice.WebShortMessageLocator" />
+	<bean id="smsService" factory-bean="smsLocator" factory-method="getWebShortMessageSoap" >
+	 	<constructor-arg value="${webservice.smsService}" />
+	</bean>
+	
+	<!-- 短链接接口 -->
+	<bean id="shortUrlSyncLocator" class="cn.yesway.common.soap.shorturlhandlerservice.ShortURLHandlerServiceLocator" />
+	<bean id="shortUrlService" factory-bean="shortUrlSyncLocator" factory-method="getBasicHttpBinding_IShortURLHandlerService" >
+	 	<constructor-arg value="${webservice.shortUrlService}" />
+	</bean>
+	
+	<!-- 智驾用户同步接口 -->
+	<bean id="userSyncLocator" class="cn.yesway.common.soap.usersyncservice.UserSyncService_ServiceLocator"/>
+	<bean id="userSyncService" factory-bean="userSyncLocator" factory-method="getBasicHttpBinding_UserSyncService">
+		<constructor-arg value="${webservice.usersyncService}" />
+	</bean>
+	
+	<!-- 智驾用户接口-->
+	<bean id="userInfoLocator" class="cn.yesway.common.soap.userinfoservice.UserInfoService_ServiceLocator"/>
+	<bean id="userInfoService" factory-bean="userInfoLocator" factory-method="getBasicHttpBinding_UserInfoService">
+		<constructor-arg value="${webservice.userinfoService}" />
+	</bean>
+	
+	<!-- 智驾用户扩展信息接口-->
+	<bean id="userExtraInfoLocator" class="cn.yesway.common.soap.userextrainfoservice.UserExtraInfoService_ServiceLocator"/>
+	<bean id="userExtraInfoService" factory-bean="userExtraInfoLocator" factory-method="getBasicHttpBinding_UserExtraInfoService">
+		<constructor-arg value="${webservice.userExtraInfoService}" />
+	</bean>
+	
+</beans>

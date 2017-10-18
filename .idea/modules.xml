@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hondayesway.iml" filepath="$PROJECT_DIR$/hondayesway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hondayesway-hu-gateway/hondayesway-hu-gateway.iml" filepath="$PROJECT_DIR$/hondayesway-hu-gateway/hondayesway-hu-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hondayesway-hu-interface/hondayesway-hu-interface.iml" filepath="$PROJECT_DIR$/hondayesway-hu-interface/hondayesway-hu-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hondayesway-hu-service/hondayesway-hu-service.iml" filepath="$PROJECT_DIR$/hondayesway-hu-service/hondayesway-hu-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hondayeswaymanagement/hondayeswaymanagement.iml" filepath="$PROJECT_DIR$/../hondayeswaymanagement/hondayeswaymanagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hondayeswaymovepay/hondayeswaymovepay.iml" filepath="$PROJECT_DIR$/../hondayeswaymovepay/hondayeswaymovepay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hondayeswaypaycallback/hondayeswaypaycallback.iml" filepath="$PROJECT_DIR$/../hondayeswaypaycallback/hondayeswaypaycallback.iml" />
+    </modules>
+  </component>
+</project>

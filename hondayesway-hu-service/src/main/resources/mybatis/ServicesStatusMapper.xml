@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.ServicesStatusDao">
+
+	 <resultMap type="cn.yesway.hondayesway.vo.ServiceStatus" id="params">
+		<id column="serviceStatusId" property="serviceStatusId"/>
+		<result column="serviceId" property="serviceId"/>
+		<result column="serviceName" property="serviceName"/>
+		<result column="remark" property="serviceRemark"/>
+		<result column="vin" property="vin"/>
+		<result column="status" property="serviceStatus"/>
+		<result column="startDate" property="startDate"/>
+		<result column="cancelDate" property="cancelDate"/>
+		<result column="endDate" property="endDate"/>
+		<result column="addTime" property="addTime"/>
+	</resultMap>
+	
+	<sql id="columns">
+	    <![CDATA[
+			serviceStatusId,serviceId,serviceName,vin,serviceStatus,startDate,cancelDate,endDate,addTime
+	    ]]>
+	</sql>
+		
+	<select id="get" resultMap="params">
+		SELECT
+			ss.serviceStatusId as serviceStatusId,
+			f.serviceId 	 as serviceId ,
+			lan1.content 	 as serviceName,
+			lan2.content	 as remark,
+			ss.vin 		 	 as vin,
+			ss.status 		 as serviceStatus,
+			ss.startDate     as startDate,
+			ss.cancelDate	 as cancelDate,
+			ss.endDate		 as endDate,
+			ss.addTime		 as addTime
+		FROM  (
+			SELECT * FROM ServiceStatus WHERE vin = #{vin} 
+		) SS
+		RIGHT join Service f
+			ON ss.serviceId = f.serviceId
+		LEFT JOIN [Language] lan1 
+			on ((lan1.Code = 'Service.servicename.' + f.ServiceId) and (lan1.[Language] = #{language} or lan1.[Language] is null))
+		LEFT JOIN
+		[Language] lan2 
+			on ((lan2.Code = 'Service.Remark.' + f.ServiceId) and (lan2.[Language] = #{language} or lan2.[Language] is null))
+		where f.ServiceId = #{serviceId} and vin = #{vin}
+	</select>
+
+
+	<select id="getList" resultMap="params">
+		SELECT
+			ss.serviceStatusId as serviceStatusId,
+			f.serviceId 	 as serviceId ,
+			lan1.content 	 as serviceName,
+			lan2.content	 as remark,
+			ss.vin 		 	 as vin,
+			ss.status 		 as serviceStatus,
+			ss.startDate     as startDate,
+			ss.cancelDate	 as cancelDate,
+			ss.endDate		 as endDate,
+			ss.addTime		 as addTime
+		FROM  (
+			SELECT * FROM ServiceStatus WHERE vin = #{vin}
+		) SS
+		RIGHT join Service f
+		ON ss.serviceId = f.serviceId
+		LEFT JOIN [Language] lan1 
+			on ((lan1.Code = 'Service.servicename.' + f.ServiceId) and (lan1.[Language] = #{language} or lan1.[Language] is null))
+		LEFT JOIN [Language] lan2 
+			on ((lan2.Code = 'Service.Remark.' + f.ServiceId) and (lan2.[Language] = #{language} or lan2.[Language] is null))
+	</select>
+
+	
+	<select id="getServiceStatus" resultMap="params">
+		SELECT
+			ss.serviceStatusId as serviceStatusId,
+			f.serviceId 	 as serviceId ,
+			lan1.content 	 as serviceName,
+			lan2.content	 as remark,
+			ss.vin 		 	 as vin,
+			ss.status 		 as serviceStatus,
+			ss.startDate     as startDate,
+			ss.cancelDate	 as cancelDate,
+			ss.endDate		 as endDate,
+			ss.addTime		 as addTime
+		FROM  (
+			SELECT * FROM ServiceStatus WHERE vin = #{vin}
+		) SS
+		RIGHT join Service f
+			ON ss.serviceId = f.serviceId   
+		LEFT JOIN [Language] lan1 
+			on ((lan1.Code = 'Service.servicename.' + f.ServiceId) and (lan1.[Language] = #{language} or lan1.[Language] is null))
+		LEFT JOIN [Language] lan2 
+			on ((lan2.Code = 'Service.Remark.' + f.ServiceId) and (lan2.[Language] = #{language} or lan2.[Language] is null))
+		WHERE f.ServiceId = #{serviceId}
+	</select>
+	
+	<update id="update">
+		UPDATE ServiceStatus 
+		<set>
+			<if test="serviceStatus != null">status=#{serviceStatus},</if>
+	      	<if test="startDate != null">startDate=#{startDate},</if>
+	      	<if test="endDate != null">endDate=#{endDate},</if>
+	      	cancelDate=#{cancelDate}
+		</set>
+		WHERE serviceStatusId = #{serviceStatusId}
+	</update>
+	
+	<insert id="add">
+		insert into ServiceStatus (serviceStatusId, serviceId, vin,status,startDate,cancelDate,endDate) values (
+	    	#{serviceStatusId}, #{serviceId}, #{vin},#{serviceStatus},#{startDate},#{cancelDate},#{endDate}
+	    )
+	</insert>
+</mapper>

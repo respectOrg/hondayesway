@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<param key="settingservice.modulename">车机客户端服务</param>
+	<param key="access.account">honda:yesway</param>
+	<param key="yesway.productid">1056</param>
+	
+	<param key="sms.template">本田讴歌车载服务订购，支付地址:{{payUrl}} ,请点击支付。</param>
+	<param key="sms.src">106980095190</param>
+	<param key="sms.appid">406</param>
+	<param key="sms.pwd">acura</param>
+	<param key="sms.logo">【九五智驾】</param>
+	<param key="sms.chinamobile">134,135,136,137,138,139,147,150,151,152,157,158,159,178,182,183,184,187,188</param>
+	<param key="sms.chinaunicom">130,131,132,145,155,156,176,185,186</param>
+	<param key="sms.chinatelecom">133,153,173,177,180,181,189</param>
+	<param key="sms.chinamobileChannel">1027</param>
+	<param key="sms.chinaunicomChannel">1020</param>
+	<param key="sms.chinatelecomChannel">1006</param>
+	
+	<!--开发
+ 	<param key="sms.paylongurl">http://10.1.2.44:8080/hondayeswaymovepay/pay/gopay.do?settlementId=</param>
+	<param key="shorturl.domain">http://10.1.11.101:9511/</param>
+	-->
+
+	<!-- 检证
+	-->
+	<param key="yesway.sectionid">95</param>
+	<param key="sms.paylongurl">http://220.181.190.212:8080/hondayeswaymovepay/pay/gopay.do?settlementId=</param>
+	<param key="shorturl.domain">http://t.yesway.cn/</param> 
+
+	<!-- 号口
+	<param key="yesway.sectionid">62</param>
+	<param key="sms.paylongurl">http://hondaacura.yesway.cn/hondayeswaymovepay/pay/gopay.do?settlementId=</param>
+	<param key="shorturl.domain">http://t.yesway.cn/</param> 
+	-->
+</config>

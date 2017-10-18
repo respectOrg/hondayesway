@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hondayesway-hu-gateway:war">
+    <output-path>$PROJECT_DIR$/hondayesway-hu-gateway/target</output-path>
+    <root id="archive" name="hondayesway-hu-gateway.war">
+      <element id="artifact" artifact-name="hondayesway-hu-gateway:war exploded" />
+    </root>
+  </artifact>
+</component>

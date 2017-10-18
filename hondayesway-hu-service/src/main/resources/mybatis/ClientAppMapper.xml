@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.ClientAppDao">
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+			AppId 			as "appId",
+			AppName 		as "appName",
+			Version 		as "version",
+			VersionName 	as "versionName",
+			LowestVersion 	as "lowestVersion",
+			Introduction 	as "introduction",
+			DownloadUrl 	as "downloadUrl",
+			FileSize 		as "fileSize",
+			UpdateTime 		as "updateTime",
+			AddTime 		as "addTime"
+	    ]]>
+	</sql>
+
+	<select id="get" resultType="cn.yesway.hondayesway.vo.ClientApp">
+
+		select 
+			ca.AppId as appId,
+			ca.AppName as appName,
+			ca.Version as version,
+			ca.VersionName as versionName,
+			ca.LowestVersion as lowestVersion,
+			lan.Content as introduction,
+			ca.DownloadUrl as downloadUrl,
+			ca.FileSize as fileSize,
+			ca.UpdateTime as updateTime,
+			ca.AddTime as addTime 
+		from (
+			select
+				*
+			from ClientApp a WHERE a.appid=#{0}
+		) ca
+		LEFT JOIN [Language] lan 
+		on (lan.Code = 'ClientApp.Introduction.' + ca.appId)
+			where lan.[Language] = #{1} or lan.[Language] is null
+	
+	</select>
+
+</mapper>

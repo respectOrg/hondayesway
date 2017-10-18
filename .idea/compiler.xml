@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hondayesway-hu-gateway" />
+        <module name="hondayesway-hu-interface" />
+        <module name="hondayesway-hu-service" />
+        <module name="hondayeswaymanagement" />
+        <module name="hondayeswaymovepay" />
+        <module name="hondayeswaypaycallback" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.7">
+      <module name="hondayesway" target="7" />
+      <module name="hondayesway-hu-gateway" target="1.6" />
+      <module name="hondayesway-hu-interface" target="7" />
+      <module name="hondayesway-hu-service" target="1.6" />
+      <module name="hondayeswaymanagement" target="7" />
+      <module name="hondayeswaymovepay" target="7" />
+      <module name="hondayeswaypaycallback" target="7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

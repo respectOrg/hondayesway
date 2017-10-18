@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+	<!-- redis sentinel监控 与 pool 基本配置-->
+	<bean id="redisSentinelManager" class="cn.yesway.hondayesway.redis.RedisSentinelManager">
+		<!-- master-name -->
+		<constructor-arg index="0" value="${linux-master-name}"/>
+		
+		<!-- sentinel服务ip:port集合 -->
+		<constructor-arg index="1" name="sentinels" >
+			<set>
+				<value>${linux-sentinel-server0}</value>
+				<value>${linux-sentinel-server1}</value>
+				<!-- <value>${linux-sentinel-server2}</value> -->
+			</set>
+		</constructor-arg>
+		
+		<property name="shardedJedisPool" ref="shardedJedisPool"></property>
+	</bean>
+	
+	<!-- jedis分片连接池配置 -->
+	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"  destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="${linux-host-server0-host}"/>
+					<constructor-arg index="1" value="${linux-host-server0-port}" type="int"/>
+					<constructor-arg index="2" value="${linux-host-server0-host}"/>
+				</bean>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="${linux-host-server1-host}"/>
+					<constructor-arg index="1" value="${linux-host-server1-port}" type="int"/>
+					<constructor-arg index="2" value="${linux-host-server1-host}"/>
+				</bean>
+				<!-- <bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="${linux-host-server2-host}"/>
+					<constructor-arg index="1" value="${linux-host-server2-port}" type="int"/>
+					<constructor-arg index="2" value="${linux-host-server2-host}"/>
+				</bean> -->
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- redis连接池配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"></bean>
+	
+ </beans>

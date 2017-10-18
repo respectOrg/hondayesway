@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.SettlementDao">
+
+	<resultMap type="cn.yesway.hondayesway.vo.Settlement" id="params">
+		<id column="settlementId" property="settlementId" />
+		<result column="vin" property="vin" />
+		<result column="serviceId" property="serviceId" />
+		<result column="feeCode" property="feeCode" />
+		<result column="payDate" property="payDate" />
+		<result column="payAmount" property="payAmount" />
+		<result column="payStatus" property="payStatus" />
+		<result column="payMethod" property="payMethod" />
+		<result column="addTime" property="addTime" />
+	</resultMap>
+
+	<sql id="columns">
+	    <![CDATA[
+			settlementId,vin,serviceId,feeCode,payDate,payAmount,payStatus,payMethod,addTime
+	    ]]>
+	</sql>
+
+	<select id="get" resultMap="params">
+		select
+		<include refid="columns" />
+		from Settlement where vin = #{0}
+	</select>
+
+	<insert id="add">
+		insert into Settlement (settlementId, vin, serviceId,
+		feeCode,payDate,payAmount,payStatus,payMethod) values (
+		#{settlementId}, #{vin}, #{serviceId},
+		#{feeCode},#{payDate},#{payAmount},#{payStatus},#{payMethod}
+		)
+	</insert>
+	<update id="update">
+		update Settlement
+		<set>
+			<if test="serviceId != null">serviceId=#{serviceId},</if>
+			<if test="payDate != null">payDate=#{payDate},</if>
+			<if test="payAmount != null">payAmount=#{payAmount},</if>
+			<if test="payStatus != null">payStatus=#{payStatus},</if>
+			<if test="payMethod != null">payMethod=#{payMethod}</if>
+		</set>
+		where settlementId=#{settlementId}
+	</update>
+
+	<select id="getById" resultMap="params">
+	SELECT s.settlementId,s.vin,s.serviceId,s.feeCode,s.payDate,s.payAmount,s.payStatus,s.payMethod,s.addTime,
+		   t.serviceName as serviceName,f.feeName as feeName
+	FROM
+	(select <include refid="columns" />
+	from settlement  WHERE SettlementId=#{0}) s
+	LEFT JOIN Service t
+		on t.ServiceId=s.ServiceId
+	LEFT JOIN FeePlan f
+		on f.FeeCode=s.FeeCode
+		
+
+
+	</select>
+</mapper>

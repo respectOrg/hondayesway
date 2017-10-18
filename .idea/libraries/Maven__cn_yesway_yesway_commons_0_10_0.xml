@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cn.yesway:yesway-commons:0.10.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/yesway-commons/0.10.0/yesway-commons-0.10.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/yesway-commons/0.10.0/yesway-commons-0.10.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/yesway-commons/0.10.0/yesway-commons-0.10.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

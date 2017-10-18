@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.PositionDao">
+
+	 <resultMap type="cn.yesway.hondayesway.vo.Position" id="params">
+		<id column="positionId" property="positionId"/>
+		<result column="vin" property="vin"/>
+		<result column="longitude" property="longitude"/>
+		<result column="latitude" property="latitude"/>
+		<result column="speed" property="speed"/>
+		<result column="heading" property="heading"/>
+		<result column="locationTime" property="locationTime"/>
+		<result column="positionQuality" property="positionQuality"/>
+		<result column="coordType" property="coordType"/>
+		<result column="addTime" property="addTime"/>
+	</resultMap>
+	<!-- 此处是公用列  由于key在sqlserver 数据库是关键字所以加 []-->
+	<sql id="columns">
+	    <![CDATA[
+			positionId,vin,longitude,latitude,speed,heading,locationTime,positionQuality,coordType,addTime
+	    ]]>
+	</sql>
+
+	<select id="get" resultMap="params">
+		select 
+		<include refid="columns" />
+		from  position  where positionId = #{positionId}
+	</select>
+	
+	<insert id="add">
+	    insert into position (positionId, vin, longitude, latitude,speed,heading,locationTime,positionQuality,coordType) values (
+	    	#{positionId}, #{vin}, #{longitude}, #{latitude},#{speed},#{heading},#{locationTime},#{positionQuality},#{coordType}
+	    )
+	</insert>
+	 <update id="update">
+		update position 
+		<set>
+	      <if test="longitude != null">longitude=#{longitude},</if>
+	      <if test="latitude != null">latitude=#{latitude},</if>
+	      <if test="speed != null">speed=#{speed},</if>
+	      <if test="heading != null">heading=#{heading},</if>
+	      <if test="locationTime != null">locationTime=#{locationTime},</if>
+	      <if test="positionQuality != null">positionQuality=#{positionQuality},</if>
+	      <if test="coordType != null">coordType=#{coordType}</if>
+   	 	</set>
+    	where positionId=#{positionId}
+	</update> 
+	<select id="getLastPosition" resultMap="params">
+		select  top 1 [Position].Longitude,[Position].Latitude,[Position].Speed,[Position].Heading,[Position].LocationTime,[Position].CoordType ,[Position].AddTime from [User]  
+		LEFT JOIN  [Position] 
+		on [Position].Vin = [User].Vin
+		where [User].PhoneNumber1 = #{phone} or [User].PhoneNumber2 = #{phone} or [User].PhoneNumber3 = #{phone}
+		order by [Position].AddTime desc
+
+	</select>
+	
+</mapper>

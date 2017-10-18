@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+    	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
+    	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
+    	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+    	http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd"
+	default-lazy-init="true">
+
+	<!--Hessian 启动BeanNameMapping 映射功能,以httpRequest作为处理Adapter -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="defaultHandler" ref="httpRequestHandlerAdapter" />
+	</bean>
+	
+	<!-- Hessian 方式以Http进行传递 -->
+	<bean id="httpRequestHandlerAdapter" class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+    
+	<!-- 暴露接口设置 -->
+	<bean name="/clientService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="clientServiceImpl" />
+		<property name="serviceInterface" value="cn.yesway.hondayesway.service.ClientService" />
+	</bean>
+	<bean name="/settlementService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="settlementServiceImpl" />
+		<property name="serviceInterface" value="cn.yesway.hondayesway.service.SettlementService" />
+	</bean>
+	<bean name="/tspService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="tspServiceImpl" />
+		<property name="serviceInterface" value="cn.yesway.hondayesway.service.TspService" />
+	</bean>
+	<bean name="/userService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="userServiceImpl" />
+		<property name="serviceInterface" value="cn.yesway.hondayesway.service.UserService" />
+	</bean>
+	<bean name="/languageService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="languageServiceImpl" />
+		<property name="serviceInterface" value="cn.yesway.hondayesway.service.LanguageService" />
+	</bean>
+	
+</beans>

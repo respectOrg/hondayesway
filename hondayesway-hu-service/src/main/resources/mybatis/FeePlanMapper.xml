@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.FeePlanDao">
+
+	<resultMap type="cn.yesway.hondayesway.vo.FeePlan" id="params">
+		<id column="feeCode" property="feeCode" />
+		<result column="serviceId" property="serviceId" />
+		<result column="feeName" property="feeName" />
+		<result column="price" property="price" />
+		<result column="months" property="months" />
+		<result column="plantype" property="type" />
+		<result column="addTime" property="addTime" />
+	</resultMap>
+
+	<sql id="columns">
+	    <![CDATA[
+			feeCode,serviceId,feeName,price,months,plantype,addTime
+	    ]]>
+	</sql>
+
+	<select id="get" resultMap="params">
+		select
+			ca.FeeCode as feecode,
+			ca.ServiceId as serviceId,
+			lan.Content as feename,
+			ca.Price as price,
+			ca.Months as months,
+			ca.PlanType as plantype,
+			ca.AddTime as addtime
+		from (
+			select
+			*
+			from FeePlan a
+			WHERE a.serviceId=#{serviceId}
+		) ca
+		LEFT JOIN [Language] lan
+			on (
+				(lan.Code = 'FeePlan.FeeName.' + ca.FeeCode)
+				and (lan.[Language] = #{language} or lan.[Language] is null)
+			)
+
+	</select>
+
+	<select id="getById" resultMap="params">
+		select
+		<include refid="columns" />
+		from feeplan where feeCode = #{0}
+	</select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.hondayesway.dao.LanguageDao">
+
+	<resultMap id="RM_Language" type="cn.yesway.hondayesway.vo.Language">
+        <result property="id" column="Id"/>
+        <result property="code" column="Code"/>
+        <result property="language" column="Language"/>
+        <result property="content" column="Content"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		Id,Code,Language,Content
+	    ]]>
+	</sql>
+	
+	<!-- getByCodeAndLanguage -->
+	<select id="getByCodeAndLanguage" resultMap="RM_Language">
+		SELECT
+		<include refid="columns" />
+		FROM [Language]
+		<where>
+	   		and Code = #{code}  
+	   		and language = #{language}  
+		</where>
+	</select>
+
+
+
+
+</mapper>

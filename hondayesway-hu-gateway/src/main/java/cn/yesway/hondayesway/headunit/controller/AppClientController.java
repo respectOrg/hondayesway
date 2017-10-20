@@ -34,6 +34,9 @@ import com.alibaba.fastjson.JSONObject;
 @RequestMapping("/*")
 public class AppClientController {
 	private static final Logger log = LoggerFactory.getLogger(AppClientController.class);
+	public   static  final String MESSAGE_HEADER = "messageheader";
+
+
 
 	@Autowired
 	AuthenticationService authenticationService;
@@ -46,13 +49,13 @@ public class AppClientController {
 	@RequestMapping("/version/get")
 	public @ResponseBody
 	Map<String, Object> getVersion(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
-		MessageHeaderRequest header = (MessageHeaderRequest) req.getAttribute("messageheader");
+		MessageHeaderRequest header = (MessageHeaderRequest) req.getAttribute(MESSAGE_HEADER);
 		JSONObject data = (JSONObject)req.getAttribute("data");
-		log.debug("getVersion Start - header:" + header + ", data:" + data);
+		log.info("","getVersion Start - header:" + header);
 		// 返回数据头
 		MessageHeaderResponse resp = new MessageHeaderResponse(BaseMessageException.ErrCode.SUCCESS, "");
 		// 返回数据体
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 		ClientApp app = null;
 		String language = header.getClientlanguage();
 		try {
@@ -69,7 +72,7 @@ public class AppClientController {
 			log.error("getVersion - " + e.toString(), e);
 			resp = gwLanguageService.process(e, language);
 		}
-		map.put("messageheader", resp);
+		map.put(MESSAGE_HEADER, resp);
 		if(resp.getErrcode() == BaseMessageException.ErrCode.SUCCESS){
 			map.put("data", app);
 		}
@@ -80,22 +83,23 @@ public class AppClientController {
 	@RequestMapping("/param/get")
 	public @ResponseBody
 	Map<String, Object> getParam(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
-		MessageHeaderRequest header = (MessageHeaderRequest) req.getAttribute("messageheader");
+		MessageHeaderRequest header = (MessageHeaderRequest) req.getAttribute(MESSAGE_HEADER);
 		JSONObject data = (JSONObject)req.getAttribute("data");
-		log.debug("getParam Start - header:" + header + ", data:" + data);
+		log.info("getParam Start - header:" + header + ", data:" + data);
 		// 返回数据头
 		MessageHeaderResponse resp = new MessageHeaderResponse(BaseMessageException.ErrCode.SUCCESS, "");
 		// 返回数据体
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 		String language = header.getClientlanguage();
 		List<Param> params = null;
+
 		try {
 			//authenticationService.authNull(data);
 //			String appkey = data.getString("appkey");
 			// 验证appkey不为空
 //			authenticationService.authParams(appkey);
 			params = clientService.getLatestParams();
-			if(params == null || params.size() < 1){
+			if(params == null || params.isEmpty() || params.size() < 1){
 				params = null;
 				throw new SelectException("查无结果", ExceptionLanguage.SELECT_EXCEPTION_NOROWS);
 			}
@@ -103,9 +107,9 @@ public class AppClientController {
 			log.error("getParam - " + e.toString(), e);
 			resp = gwLanguageService.process(e, language);
 		}
-		map.put("messageheader", resp);
+		map.put(MESSAGE_HEADER, resp);
 		if(resp.getErrcode() == BaseMessageException.ErrCode.SUCCESS){
-			Map<String, Object> respData = new LinkedHashMap<String, Object>();
+			Map<String, Object> respData = new LinkedHashMap<>();
 			respData.put("version", params.get(0).getVersion());
 			respData.put("params", params);
 			map.put("data", respData);
